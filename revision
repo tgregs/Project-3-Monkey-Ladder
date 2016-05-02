@@ -1,0 +1,92 @@
+// Trevor Gregory CST 112
+
+// Project 3 Bird Array
+float horizon;
+float monkX = 160, monkY = 600;
+float x,y,w,h,z;
+float size;
+float wave;
+float grassDX;
+int pairs;
+float birdX,birdY=20;
+void setup(){
+
+size(800,700);
+
+y=100;
+
+}
+
+void draw(){
+scene();
+ladder(); 
+monkey(monkX,monkY,10);
+grass();
+flock(pairs,x,y,w,h);
+
+}
+
+void scene(){
+ background(0, 175, 255);//background color
+ fill(124,252,0);
+ rect(0,300,width,height);
+}
+void ladder() {
+  stroke(20);
+  fill(139, 69, 19);
+ for (int i = 3; i<14; i+= 1) { 
+    rect(100, i*60, 100, 10, 70);
+  }
+  for (int j = 0; j<2; j++) {
+    rect(j*200, 150, 20, 700, 80);
+  }
+}
+
+void monkey(float x, float y, float size) {
+  // draw monkey
+  strokeWeight(2);
+  stroke(128, 128, 128);
+  line(monkX, monkY, monkX+20*z, monkY-100); // arm up
+  line(monkX, monkY, monkX-20*z, monkY-50); // arm down
+  line(monkX, monkY, monkX-20*z, monkY+100);// leg down
+  line(monkX, monkY, monkX+20*z, monkY+50); //leg up
+  fill(128, 128, 128);
+  noStroke();
+  ellipseMode(CENTER);
+  ellipse(monkX, monkY, 40, 80);
+  fill(128, 128, 128);
+  ellipse(monkX, monkY-40, 30, 30);
+}
+
+void grass() {
+  float wave=  grassDX>0 ? 10 : -10;
+  stroke(255,20,147);
+  strokeWeight(5);
+
+  for (float x=240; x<width; x+=30) {
+    line( x,height, x+wave,height-30 );
+  }
+  strokeWeight(1);
+}
+
+void flock(int pairs, float x, float y, float w, float h) {
+  //draw a flock
+  //draw a lead bird
+  float u=  h;
+  bird(x, y, w, h);
+  // draw pairs
+  for (int loop=0; loop<pairs; loop++) { 
+    x=  x-3*w;
+//    w=  w*shrink;
+//    h=  h*shrink;
+    u=  u+h/2;
+    bird(x, y-u, w, h); //up
+    bird(x, y+u, w, h); //down
+  }
+}
+
+
+void bird(float x, float y, float w, float h) {
+  triangle (x, y, x-w, y-h/2, x-w, y+h/2);
+  textSize(12);
+}
